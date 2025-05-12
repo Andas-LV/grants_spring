@@ -1,15 +1,19 @@
 package com.grants.spring.service;
 
-import com.grants.spring.model.StudentRecord;
-import com.grants.spring.repository.StudentRecordRepository;
-import com.grants.spring.util.PdfParser;
-import com.grants.spring.util.PdfReaderService;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.*;
+import com.grants.spring.model.StudentRecord;
+import com.grants.spring.repository.StudentRecordRepository;
+import com.grants.spring.util.PdfParser;
+import com.grants.spring.util.PdfReaderService;
 
 @Service
 public class PdfProcessingService {
@@ -75,5 +79,9 @@ public class PdfProcessingService {
         }
 
         return result;
+    }
+
+    public void deleteAllStudents() {
+        studentRecordRepository.deleteAll();  // Удаление всех записей
     }
 }

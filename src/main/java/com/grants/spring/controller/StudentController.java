@@ -1,15 +1,21 @@
 package com.grants.spring.controller;
 
-import com.grants.spring.model.StudentRecord;
-import com.grants.spring.service.PdfProcessingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.grants.spring.model.StudentRecord;
+import com.grants.spring.service.PdfProcessingService;
 
 @RestController
 @RequestMapping("/students")
@@ -48,5 +54,15 @@ public class StudentController {
     public ResponseEntity<List<StudentRecord>> searchStudentsByName(@RequestParam("name") String name) {
         List<StudentRecord> students = pdfProcessingService.searchStudentsByName(name);
         return ResponseEntity.ok(students);
+    }
+
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<String> deleteAllStudents() {
+        try {
+            pdfProcessingService.deleteAllStudents();  // Удаление всех студентов
+            return ResponseEntity.ok("All students deleted successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error deleting students: " + e.getMessage());
+        }
     }
 }
